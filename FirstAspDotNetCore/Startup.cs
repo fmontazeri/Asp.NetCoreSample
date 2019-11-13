@@ -42,6 +42,13 @@ namespace FirstAspDotNetCore
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromSeconds(300);
+                option.Cookie.HttpOnly = true;
+                option.Cookie.Name = "FirstSession";
+
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -63,6 +70,7 @@ namespace FirstAspDotNetCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseAuthentication();
 

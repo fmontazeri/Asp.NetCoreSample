@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+@{
+
+    if (ViewBag.Person is PersonModel person)
+    {
+        <h3>Personal Information has been read from session</h3>
+        <span>@person.Name</span>
+        <span>@person.Family</span>
+        <hr/>
+
+        <a href="/Session/Delete" class="btn btn-danger">Delete Sesson</a>
+    }
+    else
+    {
+        <h3>There is no information in Session!</h3>
+        <form action="/Session/Post"  method="post">
+            <button class="btn btn-primary" type="submit">Set Session</button>
+        </form>
+    }
+}
+
+
