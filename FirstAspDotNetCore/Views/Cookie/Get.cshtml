@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+
+@{
+
+    if (ViewBag.Person is PersonModel person)
+    {
+        <span> @person.Name </span>
+        <span> @person.Family </span>
+        <hr/>
+        <a href="/Cookie/Delete"  class="btn btn-danger"  >ِDelete Cookie!</a>
+    }
+    else
+    {
+        <h3>Thers is no information in cookie!</h3>
+        <form action="/Cookie/Set" method="post">
+            <button type="submit" class="btn btn-primary">Set cookie</button>
+        </form>
+    }
+}
