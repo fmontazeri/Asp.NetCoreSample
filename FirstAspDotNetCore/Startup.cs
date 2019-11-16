@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using FirstAspDotNetCore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace FirstAspDotNetCore
 {
@@ -59,6 +60,11 @@ namespace FirstAspDotNetCore
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseStaticFiles(new StaticFileOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(System.IO.Path.Combine(env.ContentRootPath,"node_modules")) ,
+                    RequestPath ="/node_modules"
+                });
             }
             else
             {
