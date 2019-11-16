@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    var person = ViewBag.Person as PersonModel;
+}
+
+<h1>Index</h1>
+@*<cache enabled="false" expires-on="@DateTime.Now.AddDays(1)">
+        <p>@person.Name</p>
+        <p>@person.Family</p>
+    </cache>*@
+
+<cache expires-after="@TimeSpan.FromSeconds(2)">
+    <p>@person.Name</p>
+    <p>@person.Family</p>
+</cache>
+
+
+@*<cache expires-sliding ="@TimeSpan.FromSeconds(5)">
+        <p>@person.Name</p>
+        <p>@person.Family</p>
+    </cache>*@
+
+@*<cache vary-by-header ="User-Agent">
+        <p>@person.Name</p>
+        <p>@person.Family</p>
+    </cache>*@
+
+<a href="/Cache/Get" class="btn btn-info">Get Cashe Data</a> &nbsp;
