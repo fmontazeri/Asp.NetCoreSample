@@ -9,6 +9,8 @@ namespace FirstAspDotNetCore.Models
     {
         public string Name { get; set; }
         public string Family { get; set; }
+        public string Image { get; set; }
+     
 
     }
 }
