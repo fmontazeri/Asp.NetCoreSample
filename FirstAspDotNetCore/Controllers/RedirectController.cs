@@ -28,7 +28,7 @@ namespace FirstAspDotNetCore.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult ToForeignAction()
+        public RedirectToActionResult ToForeignAction()
         {
             return RedirectToAction("GetImage", "File");
         }
