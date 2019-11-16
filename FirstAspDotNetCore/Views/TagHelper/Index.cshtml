@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h2> asp-action - asp-controller</h2>
+<a asp-action="Index2" asp-controller="TagHelper" >Clike here!</a>
+
+<h2>as-route-id</h2>
+<a asp-action="Index3" asp-controller="TagHelper" asp-route-id="1">Click here!</a>  @*or another name for parameter*@
+
+<h2>asp-all-route-data</h2>
+@{
+
+    var parameters =  new Dictionary<string, string>()
+    {
+        {"Name", "Fatemeh"},
+        {"Family", "Montazeri"},
+    };
+}
+<a asp-action="Index4" asp-controller="TagHelper" asp-all-route-data="parameters">Click here!</a>

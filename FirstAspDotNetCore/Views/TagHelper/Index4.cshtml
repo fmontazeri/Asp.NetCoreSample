@@ -1,0 +1,13 @@
+﻿@model PersonModel
+@{
+    ViewData["Title"] = "Index4";
+}
+
+<h1>Index4</h1>
+<div>
+    @Model.Name
+    &nbsp;
+    @Model.Family
+</div>
+<a asp-action="Index" asp-controller="TagHelper">Return</a>
+
