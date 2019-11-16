@@ -33,6 +33,22 @@ namespace FirstAspDotNetCore.Controllers
             return RedirectToAction("GetImage", "File");
         }
 
+        #region Pass params to another action
+        public IActionResult PassParams()
+        {
+            return RedirectToAction("PersonInfo", new { Name = "Fatemeh", Family = "Montazeri" });
+
+        }
+
+        public IActionResult PersonInfo(string Name, string Family)
+        {
+            ViewBag.Name = Name;
+            ViewBag.Family = Family;
+            return View();
+        }
+        #endregion
+
+
 
     }
 }
