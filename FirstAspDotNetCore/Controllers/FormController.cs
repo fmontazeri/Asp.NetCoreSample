@@ -19,18 +19,18 @@ namespace FirstAspDotNetCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(PersonModel model , IFormFile File)
+        public IActionResult Create(PersonModel model )
         {
 
             //File --> Base64(string)
-            if (File != null)
+            if (model.File != null)
             {
                 using (var ms = new MemoryStream())
                 {
-                    File.CopyTo(ms);
+                    model.File.CopyTo(ms);
                     byte[] imageBytes = ms.ToArray();
                     var imageBase64 = Convert.ToBase64String(imageBytes);
-                    model.Image = $"data:{File.ContentType};base64,{imageBase64}";
+                    model.Image = $"data:{model.File.ContentType};base64,{imageBase64}";
                 }
             }
             ViewBag.Person = model;
@@ -46,16 +46,17 @@ namespace FirstAspDotNetCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult ByTagHelper(PersonModel model , IFormFile File)
+        public IActionResult ByTagHelper(PersonModel model)
         {
-            if (File != null)
+            if (!ModelState.IsValid) return View(model);
+            if (model.File != null)
             {
                 using (var ms = new MemoryStream())
                 {
-                    File.CopyTo(ms);
+                    model.File.CopyTo(ms);
                     var imagesArr = ms.ToArray();
                     var imageBase64 = Convert.ToBase64String(imagesArr);
-                    model.Image = $"data:{File.ContentType};base64,{imageBase64}";
+                    model.Image = $"data:{model.File.ContentType};base64,{imageBase64}";
                 }
           
             }

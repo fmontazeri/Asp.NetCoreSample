@@ -40,62 +40,99 @@
 
         <div class="col-md-9 float-left">
             <div class="form-group row">
-                <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input type="text" asp-for="Name" class="form-control" id="inputName" placeholder="Enter your name please"> @*readonly with form-control-plaintext*@
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputFamily" class="col-sm-2 col-form-label">Family</label>
+                <label asp-for="Family" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input type="text" asp-for="Family" class="form-control" id="inputFamily" placeholder="Enter your family please">
+                    <span asp-validation-for="Family" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="CityId" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="CityId" asp-items="@ViewBag.Cities" class="form-control" id="selectCity">
+                        <option value="">انتخاب کنید</option>
+                    </select>
+                    <span asp-validation-for="CityId" class="text-danger"></span>
+
                 </div>
             </div>
             
             <div class="form-group row">
-                <label for="inputFamily" class="col-sm-2 col-form-label">City</label>
+                <label class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
-                    <select asp-for="CityId" asp-items="@ViewBag.Cities" class="form-control" id="selectCity"></select>
+                    <div class="form-check">
+
+                        <input type="checkbox" asp-for="IAccept" id="IAccept" class="form-check-input">
+                        <label asp-for="IAccept" class="form-check-label"></label>
+                        <br />
+                        <span asp-validation-for="IAccept" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 float-left">
-            <label>Upload picture</label>
+            <label asp-for="Image"></label>
             <div class="col-md-12 form-group margin-bottom-40 padding-left-0 padding-right-0">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-new thumbnail" style="font-weight: bold">
                         @{
                             if (Model?.Image == null)
                             {
-                                <img src="~/images/NoImage.jpg"/>
+                                <img src="~/images/NoImage.jpg" style="height: 200px" class="img-thumbnail" />
                             }
                             else
                             {
-                                <img src="@Model.Image"/>
+                                <img src="@Model.Image" style="height: 200px" class="img-thumbnail" />
                             }
                         }
-                     
+
                     </div>
                     <div class="fileinput-preview fileinput-exists thumbnail" style="height: 200px"> </div>
                     <div>
                         <span class="btn default btn-file">
                             <span class="fileinput-new btn btn-primary"> Choose your picture </span>
                             <span class="fileinput-exists btn btn-success"> Change picture </span>
-                            <input type="file" name="File" accept=".jpg, .png, .jpeg, .gif, .tif, .tiff, .JPG" />
+                            <input type="file" asp-for="File" accept=".jpg, .png, .jpeg, .gif, .tif, .tiff, .JPG" />
                         </span>
                         <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> Delete </a>
                     </div>
+                    @if (Model == null || string.IsNullOrEmpty(Model.Image))
+                    {
+                        <span class="text-danger" asp-validation-for="File"></span>
+                    }
+
                 </div>
             </div>
         </div>
 
-
-        <button type="submit" class="btn btn-primary mb-2">Add person</button>
+        <button type="submit" class="btn btn-primary mb-2">Save</button>
     </form>
 </div>
 
 
 @section Scripts{
     <script src="~/js/bootstrap-fileinput.js"></script>
+    <script>
+        //exend jquery range validator to work for required checkboxes
+        var defaultRangeValidator = $.validator.methods.range;
+        $.validator.methods.range = function (value, element, param) {
+            //if it's a checkbox return true itt is checked
+            if (element.type === 'checkbox') {
+                return element.checked;
+            } else {
+                //otherwise run the default validation function
+                return defaultRangeValidator.call(this, value, element, param);
+            }
+        }
+    </script>
 }
