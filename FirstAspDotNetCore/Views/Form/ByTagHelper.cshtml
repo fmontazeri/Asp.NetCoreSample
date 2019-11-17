@@ -1,0 +1,94 @@
+﻿@model PersonModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+@section Styles{
+    <link href="~/css/bootstrap-fileinput.css" rel="stylesheet" />
+}
+
+
+@{
+    if (ViewBag.Person is PersonModel person)
+    {
+        <h1>Person Info</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name </th>
+                    <th>Family </th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@person.Name</td>
+                    <td>@person.Family</td>
+                    <td><img src="@person.Image" class="img-thumbnail" style="width: 90px" /></td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
+<h1>Create person</h1>
+<h2 class="text-danger"> This form created using TagHelpers </h2>
+<h5 class="text-info">Usin TagHelpers add a hidden field named _RequestVerificationToken to the create form that perevent CSRF(Cross-Site Request Forgery) Attack</h5>
+<div class="col-12">
+    <form asp-action="ByTagHelper" asp-controller="Form" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-9 float-left">
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Name" class="form-control" id="inputName" placeholder="Enter your name please"> @*readonly with form-control-plaintext*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputFamily" class="col-sm-2 col-form-label">Family</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Family" class="form-control" id="inputFamily" placeholder="Enter your family please">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 float-left">
+            <label>Upload picture</label>
+            <div class="col-md-12 form-group margin-bottom-40 padding-left-0 padding-right-0">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="font-weight: bold">
+                        @{
+                            if (Model?.Image == null)
+                            {
+                                <img src="~/images/NoImage.jpg"/>
+                            }
+                            else
+                            {
+                                <img src="@Model.Image"/>
+                            }
+                        }
+                     
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" style="height: 200px"> </div>
+                    <div>
+                        <span class="btn default btn-file">
+                            <span class="fileinput-new btn btn-primary"> Choose your picture </span>
+                            <span class="fileinput-exists btn btn-success"> Change picture </span>
+                            <input type="file" name="File" accept=".jpg, .png, .jpeg, .gif, .tif, .tiff, .JPG" />
+                        </span>
+                        <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> Delete </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary mb-2">Add person</button>
+    </form>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/bootstrap-fileinput.js"></script>
+}
