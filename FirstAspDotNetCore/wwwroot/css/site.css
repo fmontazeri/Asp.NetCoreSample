@@ -1,6 +1,12 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
+@font-face {
+    font-family: "yekan";
+    src: url(/fonts/Yekan.eot);
+    src: url(/fonts/Yekan.eot?#iefix) format("embedded-opentype"), url(/fonts/Yekan.woff) format("woff"), url(/fonts/Yekan.ttf) format("truetype"), url(/fonts/Yekan.svg#BYekan) format("svg");
+    font-weight: normal;
+    font-style: normal
+}
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -44,6 +50,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+    font-family: yekan !important;
 }
 .footer {
   position: absolute;
