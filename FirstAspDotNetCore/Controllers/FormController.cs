@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FirstAspDotNetCore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FirstAspDotNetCore.Controllers
 {
@@ -39,6 +40,8 @@ namespace FirstAspDotNetCore.Controllers
 
         public IActionResult ByTagHelper()
         {
+            var cities = GetCities();
+            ViewBag.Cities = new SelectList(cities, "Id", "Name");
             return View();
         }
 
@@ -56,8 +59,20 @@ namespace FirstAspDotNetCore.Controllers
                 }
           
             }
+
+            var cities = GetCities();
+            ViewBag.Cities = new SelectList(cities, "Id", "Name",model.CityId);
             return View(model);
 
+        }
+
+        private List<City> GetCities()
+        {
+            return new List<City>()
+            {
+                new City(){Id = 1 , Name = "Tehran"} ,
+                new City(){Id = 2, Name = "Esfahan"}
+            };
         }
     }
 }
