@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FirstAspDotNetCore.CustomRouteConstraints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -37,6 +38,10 @@ namespace FirstAspDotNetCore
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddRouting(option =>
+            {
+                option.ConstraintMap.Add("weekday", typeof(WeekDayConstraint));
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -86,9 +91,9 @@ namespace FirstAspDotNetCore
             {
                 //Pay attention to urls are created by routing pipeline in page Home/Index
 
-                //routes.MapRoute(
-                //    name: "default",
-                //    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
                 //**********************************************
                 //routes.MapRoute(
                 //    name: "route1",
@@ -171,19 +176,33 @@ namespace FirstAspDotNetCore
                 //-->200  /1  /hello  /1/hello
                 //-->404  /hello/hello  /hello/124  
                 //*********************************************
-                routes.MapRoute(
-                    name: "route1",
-                    template: "{controller}/{action}/{id?}",
-                    defaults: new { Controller = "Home", Action = "Index" });
-                routes.MapRoute(
-                    name: "Route5",
-                    template: "OldCtrl/{action}/{id?}",
-                    defaults: new {Controller="Session" });
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" });
+                //routes.MapRoute(
+                //    name: "Route5",
+                //    template: "OldCtrl/{action}/{id?}",
+                //    defaults: new {Controller="Session" });
 
-                //Old address : /OldCtrl/Get
-                //New address : /Session/Get
+                ////Old address : /OldCtrl/Get
+                ////New address : /Session/Get
+                //********************* Custom Constraint *********************************
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" },
+                //    constraints:new{id=new WeekDayConstraint()});
+                //OR
+                //// It's service added to servies (ConfigureServices method)
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller}/{action}/{id:weekday?}",
+                //    defaults: new {Controller = "Home", Action = "Index"});
 
-
+                ////200 /home/index/fri
+                ////404  /home/index/hello
+                //*******************************************
             });
         }
     }
