@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FirstAspDotNetCore.Data;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -77,14 +80,110 @@ namespace FirstAspDotNetCore
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
+                //Pay attention to urls are created by routing pipeline in page Home/Index
+
+                //routes.MapRoute(
+                //    name: "default",
+                //    template: "{controller=Home}/{action=Index}/{id?}");
+                //**********************************************
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" });
+                //***********************************************
+                //routes.MapRoute(
+                //    name: "route2",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" } ,
+                //    constraints: new{ id = new IntRouteConstraint()});
+                //OR
+                //routes.MapRoute(
+                //    name: "route2",
+                //    template: "{controller}/{action}/{id:int?}",
+                //    defaults: new {Controller = "Home", Action = "Index"});
+                //************************************************
+                //routes.MapRoute(
+                //    name: "route2",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" },
+                //    constraints: new { id = new RangeRouteConstraint(10,30) });
+                //
+                //OR
+                //routes.MapRoute(
+                //    name: "route2",
+                //    template: "{controller}/{action}/{id:range(10,30)?}",
+                //    defaults: new {Controller = "Home", Action = "Index"});
+                //*************************************************
+                //routes.MapRoute(
+                //    name: "route3",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" },
+                //    constraints: new { id = new BoolRouteConstraint() });
+                //OR
+                //routes.MapRoute(
+                //    name: "route3",
+                //    template: "{controller}/{action}/{id:bool?}",
+                //    defaults: new {Controller = "Home", Action = "Index"});
+                //***********************************************
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller}/{action}/{id?}",
+                ////Check Both of theme and see what happen
+                //    defaults: new { Controller = "Home", Action = "Index" },
+                //    //defaults: new { Controller = "Session", Action = "Get" },
+                //    constraints: new { Controller = new RegexRouteConstraint("^S.*") });
+                //OR
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller:regex(^H.*$)=Home}/{action=Index}/{id?}");//,
+                ////    defaults: new {Controller = "Home", Action = "Index"});
+                //AND
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller=Home}/{action:regex(^Index$|^Index2$)=Index}/{id?}");
+                //***************************************************
+                //routes.MapRoute(
+                //    name: "route1",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { Controller = "Home", Action = "Index" });
+                ////--> /1   /hello
+                //routes.MapRoute(
+                //    name: "route4",
+                //    template: "{controller}/{action}/{id}/{title}",
+                //    defaults: new { Controller = "Home", Action = "Index" },
+                //    constraints: new
+                //    {
+                //        id = new CompositeRouteConstraint(new IRouteConstraint[]
+                //        {
+                //           new IntRouteConstraint(),
+                //           new RangeRouteConstraint(1,long.MaxValue)
+                //        }),
+                //        title = new CompositeRouteConstraint(new IRouteConstraint[]
+                //        {
+                //            new AlphaRouteConstraint(),
+                //            new MinLengthRouteConstraint(3),
+                //        })
+                //    });
+                //-->200  /1  /hello  /1/hello
+                //-->404  /hello/hello  /hello/124  
+                //*********************************************
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "route1",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { Controller = "Home", Action = "Index" });
+                routes.MapRoute(
+                    name: "Route5",
+                    template: "OldCtrl/{action}/{id?}",
+                    defaults: new {Controller="Session" });
+
+                //Old address : /OldCtrl/Get
+                //New address : /Session/Get
+
+
             });
         }
     }
