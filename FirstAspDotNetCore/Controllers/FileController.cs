@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FirstAspDotNetCore.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,27 @@ namespace FirstAspDotNetCore.Controllers
             var filePath = $"{_hostingEnvironment.ContentRootPath}\\content\\ticket.pdf";
             var ms = new FileStream(filePath,FileMode.Open , FileAccess.Read);
             return  new FileStreamResult(ms,"application/pdf");
+        }
+
+        public IActionResult UploadImage()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult UploadImage(ImageModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            if (model != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    model.Image.CopyTo(ms);
+                    var bytes = ms.ToArray();
+                    var imageBase64 = Convert.ToBase64String(bytes);
+                    ViewBag.Image = $"data:{model.Image.ContentType};base64,{imageBase64}";
+                }
+            }
+            return View();
         }
 
         

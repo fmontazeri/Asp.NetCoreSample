@@ -1,0 +1,14 @@
+﻿@model ImageModel
+@{
+    ViewData["Title"] = "Upload Image";
+}
+
+<h1>Upload Image</h1>
+
+<form asp-action="UploadImage" asp-controller="File" method="post" enctype="multipart/form-data">
+    <input asp-for="Image" type="file" class="form-control"/>
+    <img src="@ViewBag.Image"/>
+    <span asp-validation-for="Image"  class="text-danger"></span>
+    <br/>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
