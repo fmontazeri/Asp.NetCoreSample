@@ -95,8 +95,16 @@ namespace FirstAspDotNetCore
                 //Pay attention to urls are created by routing pipeline in page Home/Index
 
                 routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+             
+
                 //**********************************************
                 //routes.MapRoute(
                 //    name: "route1",

@@ -1,0 +1,26 @@
+﻿@addTagHelper *,FirstAspDotNetCore.Areas
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h2> Manage persons here!</h2>
+<p>
+    Go to Panel :
+    <a asp-action="Index" asp-controller="Home" asp-area="Admin">Home</a>
+</p>
+<p>
+    Render by partial view :
+    <a asp-action="Index" asp-controller="Person" asp-area="">Persons</a>
+</p>
+<p>
+    Render by view  component:
+    <a asp-action="Get" asp-controller="Person" asp-area="">Persons</a>
+</p>
+<p>
+    Go Home :
+    <a asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+</p>
+
+
+
