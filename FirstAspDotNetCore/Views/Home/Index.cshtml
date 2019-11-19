@@ -2,17 +2,28 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>@ViewBag.Message</h1>
+<h1>@ViewBag.Message </h1>
+Render by PartialAsync :
+@await Html.PartialAsync("_DateTimeView", DateTime.Now)
+<hr />
+Render by TagHelper Partial :
+<partial name="_DateTimeView" model="@DateTime.Now"  />
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<a  asp-action="Get" asp-controller="Session" class="btn btn-info">Session Management</a> &nbsp;
-<a href="/OldCtrl/Get" class="btn btn-info">Handle old address by new address </a> &nbsp;
-<a asp-action="Get" asp-controller="Cookie" class="btn btn-info">Cookie Management</a> &nbsp;
-<a  asp-action="Create" asp-controller="Form" class="btn btn-info">Create Form</a> &nbsp;
-<a asp-action="ByTagHelper" asp-controller="Form"   class="btn btn-info">Create Form by TagHelpers </a> &nbsp;
-<a asp-action="Index" asp-controller="Cache" class="btn btn-info">Cache Data</a> &nbsp;
-<a asp-action="Index" asp-controller="TagHelper"  class="btn btn-info">Tag Helper samples</a> &nbsp;
-<a asp-action="Index" asp-controller="CustomTagHelper"  class="btn btn-info">Custom TagHelper</a> &nbsp;
-<a asp-action="UploadImage" asp-controller="File"  class="btn btn-info">Custom Attribute</a> &nbsp;
+<div class="col-lg-12">
+    <div class="col-lg-6 float-left">
+        Render by Partial view
+        @await Html.PartialAsync("_Menu")
+    </div>
+    <div class="col-lg-6 float-left">
+        Render By ViewComponent
+        @await Component.InvokeAsync("PersonList")
+        
+    </div>
+ 
+</div>
+
+

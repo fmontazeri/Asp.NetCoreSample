@@ -30,5 +30,10 @@ namespace FirstAspDotNetCore.Controllers
         {
             return View();
         }
+        
+        public IActionResult GetDateTime()
+        {
+            return PartialView("_DateTimeView" , DateTime.Now);
+        }
     }
 }

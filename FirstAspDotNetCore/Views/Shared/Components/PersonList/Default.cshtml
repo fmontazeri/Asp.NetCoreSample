@@ -1,0 +1,19 @@
+﻿@model IEnumerable<PersonModel>
+
+<table class="table  table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Family</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>@person.Name</td>
+                <td>@person.Family</td>
+            </tr>
+        }
+    </tbody>
+</table>
